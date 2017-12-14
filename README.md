@@ -21,6 +21,7 @@ There is a need for a tool which would directly download and convert the video, 
 * Adds metadata automatically from the title.
 * Add a preffered device to send music, or override it with `--newdevice` option.
 * Delete the downloaded video/music file from the computer via `--delete` option.
+* Send the downloaded video/music file to your friends via the `--send` option.
 
 ## How to use?
 
