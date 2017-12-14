@@ -153,7 +153,7 @@ def download(link, newdevice, video, delete,send):
         file_data = pb.upload_file(song, recent_download)
 
     
-    pb.push_file(**file_data, device=to_device)
+    to_device.push_file(**file_data)
     print("The file has been  sent your phone.")
 
     if send:
