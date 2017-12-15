@@ -154,21 +154,20 @@ def download(link, newdevice, video, delete,send):
 
     
     to_device.push_file(**file_data)
-    print("The file has been  sent your phone.")
+    print("The file has been sent to {0}.".format(to_device))
 
     if send:
-        for item in pb.chats:
-            print(pb.chats.index(item), item, "\n")
-        index=rawinput("Enter the corresponding chat no. for the person you want to send the file to.")
+        for i, device in enumerate(pb.chats, 1):
+            print("{0} : {1}".format(i, pb.chats[i-1])
+        index=rawinput("Enter the corresponding chat no. for the person you want to send the file to. ")
         try:
             chat=pb.chats[index]
             pb.push_file(**file_data, chat=chat)
         except:
             print("Contact does not exist.")
         else:
-            print("The file has been sent to ",chat)
-        
-        
+            print("The file has been sent to ", chat)
+  
     if delete:
         os.remove(recent_download)
 
