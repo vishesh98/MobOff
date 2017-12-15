@@ -158,10 +158,10 @@ def download(link, newdevice, video, delete,send):
 
     if send:
         for i, device in enumerate(pb.chats, 1):
-            print("{0} : {1}".format(i, pb.chats[i-1])
+            print("{0} : {1}".format(i, device))
         index=rawinput("Enter the corresponding chat no. for the person you want to send the file to. ")
         try:
-            chat=pb.chats[index]
+            chat=pb.chats[index-1]
             pb.push_file(**file_data, chat=chat)
         except:
             print("Contact does not exist.")
