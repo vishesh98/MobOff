@@ -106,6 +106,9 @@ def download(link, newdevice, video, delete,send):
         click.secho("The directory previously selected to download music can't be accessed."
                     " Please rerun moboff initialise.")
         quit()
+    
+    os.mkdir("{0}/files_go_here".format(directory))
+    os.chdir("{0}/files_go_here".format(directory))
 
     if video is True:
         downloadcommand = ["youtube-dl",
@@ -142,19 +145,12 @@ def download(link, newdevice, video, delete,send):
     list_of_files = []
     for files in types:
         list_of_files.extend(glob.glob(files))
-
-    recent_download = max(
-        list_of_files,
-        key=os.path.getctime)
-
-    print("File to send : {0}".format(recent_download))
-
-    with open(recent_download, "rb") as song:
-        file_data = pb.upload_file(song, recent_download)
-
-    
-    to_device.push_file(**file_data)
-    print("The file has been sent to {0}.".format(to_device))
+    for file in list_of_files: 
+        print("File to send : {0}".format(file))
+        with open(file, "rb") as song:
+            file_data = pb.upload_file(song, file)
+        to_device.push_file(**file_data)
+        print("The file has been  sent your phone.")
 
     if send:
         for i, device in enumerate(pb.chats, 1):
@@ -162,14 +158,27 @@ def download(link, newdevice, video, delete,send):
         index=rawinput("Enter the corresponding chat no. for the person you want to send the file to. ")
         try:
             chat=pb.chats[index-1]
+            for file in list_of_files: 
+                print("File to send : {0}".format(file))
+
+                with open(file, "rb") as song:
+                    file_data = pb.upload_file(song, file)
             pb.push_file(**file_data, chat=chat)
         except:
             print("Contact does not exist.")
         else:
             print("The file has been sent to ", chat)
   
+     for file in list_of_files:
+        if file.endswith((".mp3", "mp4", ".mkv")):
+            os.rename("{0}/files_go_here/{1}".format(directory, file),"{0}/{1}".format(directory, file))
+            
+    os.rmdir("{0}/files_go_here".format(directory))   
+    os.chdir(directory)
+
     if delete:
-        os.remove(recent_download)
+        for file in list_of_files:
+            os.remove(file)
 
 
 @cli.command('initialise', short_help='Initialise with info')
