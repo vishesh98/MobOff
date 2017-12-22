@@ -155,21 +155,20 @@ def download(link, newdevice, video, delete,send):
     if send:
         for i, device in enumerate(pb.chats, 1):
             print("{0} : {1}".format(i, device))
-        index=rawinput("Enter the corresponding chat no. for the person you want to send the file to. ")
+        index=int(rawinput("Enter the corresponding chat no. for the person you want to send the file to. "))
         try:
             chat=pb.chats[index-1]
             for file in list_of_files: 
                 print("File to send : {0}".format(file))
-
                 with open(file, "rb") as song:
                     file_data = pb.upload_file(song, file)
-            pb.push_file(**file_data, chat=chat)
+                pb.push_file(**file_data, chat=chat)
         except:
             print("Contact does not exist.")
         else:
             print("The file has been sent to ", chat)
   
-     for file in list_of_files:
+    for file in list_of_files:
         if file.endswith((".mp3", "mp4", ".mkv")):
             os.rename("{0}/files_go_here/{1}".format(directory, file),"{0}/{1}".format(directory, file))
             
