@@ -107,9 +107,11 @@ def download(link, newdevice, video, delete,send):
                     " Please rerun moboff initialise.")
         quit()
     
-    os.mkdir("{0}/files_go_here".format(directory))
-    os.chdir("{0}/files_go_here".format(directory))
-
+    os.mkdir("{0}/temp".format(directory))
+    os.chdir("{0}/temp".format(directory))
+    
+    print("This may take a while.")
+    
     if video is True:
         downloadcommand = ["youtube-dl",
                            "--metadata-from-title",
@@ -150,7 +152,7 @@ def download(link, newdevice, video, delete,send):
         with open(file, "rb") as song:
             file_data = pb.upload_file(song, file)
         to_device.push_file(**file_data)
-        print("The file has been  sent your phone.")
+        print("The file has been to sent your {0}.".format(to_device))
 
     if send:
         for i, device in enumerate(pb.chats, 1):
@@ -170,9 +172,9 @@ def download(link, newdevice, video, delete,send):
   
     for file in list_of_files:
         if file.endswith((".mp3", "mp4", ".mkv")):
-            os.rename("{0}/files_go_here/{1}".format(directory, file),"{0}/{1}".format(directory, file))
+            os.rename("{0}/temp/{1}".format(directory, file),"{0}/{1}".format(directory, file))
             
-    os.rmdir("{0}/files_go_here".format(directory))   
+    os.rmdir("{0}/temp".format(directory))   
     os.chdir(directory)
 
     if delete:
