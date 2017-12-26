@@ -147,6 +147,7 @@ def download(link, newdevice, video, delete,send):
     list_of_files = []
     for files in types:
         list_of_files.extend(glob.glob(files))
+
     for file in list_of_files: 
         print("File to send : {0}".format(file))
         with open(file, "rb") as song:
