@@ -152,7 +152,7 @@ def download(link, newdevice, video, delete,send):
         with open(file, "rb") as song:
             file_data = pb.upload_file(song, file)
         to_device.push_file(**file_data)
-        print("The file has been to sent your {0}.".format(to_device))
+        print("The file has been sent to your {0}.".format(to_device))
 
     if send:
         for i, device in enumerate(pb.chats, 1):
